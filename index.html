@@ -65,7 +65,6 @@ button:hover {
 
 .logo {
     font-size: 60px;
-    margin-bottom: 0;
 }
 
 .games {
@@ -210,10 +209,20 @@ button:hover {
 ========================= */
 
 #snakeCanvas {
-    background: black;
+    background: #101018;
+
+    /*
+       20px grid cells
+       Each field is clearly visible
+    */
+
     border: 4px solid #6c5ce7;
-    border-radius: 10px;
+    border-radius: 8px;
+
     max-width: 90vw;
+
+    box-shadow:
+        0 0 20px rgba(108, 92, 231, 0.25);
 }
 
 .snake-controls {
@@ -356,7 +365,11 @@ button:hover {
 
             <p>Beat the dealer!</p>
 
-            <p>🪙 <span id="homeCoins">10</span> coins</p>
+            <p>
+                🪙
+                <span id="homeCoins">10</span>
+                coins
+            </p>
 
         </div>
 
@@ -369,7 +382,10 @@ button:hover {
 
             <p>Eat the food and grow!</p>
 
-            <p>🏆 Highscore: <span id="homeSnakeHighscore">0</span></p>
+            <p>
+                🏆 Highscore:
+                <span id="homeSnakeHighscore">0</span>
+            </p>
 
         </div>
 
@@ -387,8 +403,12 @@ button:hover {
     </div>
 
 
-    <button class="reset-button" onclick="resetAllData()">
+    <button
+        class="reset-button"
+        onclick="resetAllData()">
+
         Reset All Saved Data
+
     </button>
 
 </section>
@@ -401,20 +421,28 @@ button:hover {
 
 <section id="blackjack" class="game">
 
-    <button class="back" onclick="showGame('home')">
+    <button
+        class="back"
+        onclick="showGame('home')">
+
         ← Back
+
     </button>
 
     <h2>🃏 Blackjack</h2>
 
     <div class="score">
+
         🪙 Coins:
         <span id="points">10</span>
+
     </div>
 
     <div class="highscore">
+
         🏆 Coin Highscore:
         <span id="coinHighscore">10</span>
+
     </div>
 
 
@@ -424,14 +452,20 @@ button:hover {
             Dealer
         </div>
 
-        <div id="dealerHand" class="hand"></div>
+        <div
+            id="dealerHand"
+            class="hand">
+        </div>
 
 
         <div class="hand-title">
             Your Hand
         </div>
 
-        <div id="playerHand" class="hand"></div>
+        <div
+            id="playerHand"
+            class="hand">
+        </div>
 
 
         <div id="blackjackMessage">
@@ -467,8 +501,12 @@ button:hover {
 
 <section id="snake" class="game">
 
-    <button class="back" onclick="showGame('home')">
+    <button
+        class="back"
+        onclick="showGame('home')">
+
         ← Back
+
     </button>
 
     <h2>🐍 Snake</h2>
@@ -478,14 +516,19 @@ button:hover {
     </p>
 
     <div class="score">
+
         Score:
         <span id="snakeScore">0</span>
+
     </div>
 
     <div class="highscore">
+
         🏆 Highscore:
         <span id="snakeHighscore">0</span>
+
     </div>
+
 
     <canvas
         id="snakeCanvas"
@@ -497,10 +540,13 @@ button:hover {
     <div class="snake-controls">
 
         <div class="snake-row">
+
             <button onclick="changeDirection('up')">
                 ⬆️
             </button>
+
         </div>
+
 
         <div class="snake-row">
 
@@ -535,8 +581,12 @@ button:hover {
 
 <section id="tictactoe" class="game">
 
-    <button class="back" onclick="showGame('home')">
+    <button
+        class="back"
+        onclick="showGame('home')">
+
         ← Back
+
     </button>
 
     <h2>❌⭕ Tic-Tac-Toe</h2>
@@ -551,19 +601,27 @@ button:hover {
         <button
             id="easyButton"
             onclick="setDifficulty('easy')">
+
             Easy
+
         </button>
+
 
         <button
             id="mediumButton"
             onclick="setDifficulty('medium')">
+
             Medium
+
         </button>
+
 
         <button
             id="hardButton"
             onclick="setDifficulty('hard')">
+
             Hard
+
         </button>
 
     </div>
@@ -589,9 +647,11 @@ button:hover {
 
     <div id="ticBoard"></div>
 
+
     <div id="ticMessage">
         Your turn!
     </div>
+
 
     <button onclick="startTicTacToe()">
         Restart
@@ -704,28 +764,48 @@ function saveData() {
 
 function updateSavedDisplays() {
 
-    document.getElementById("points").innerText =
-        points;
+    document.getElementById(
+        "points"
+    ).innerText = points;
 
-    document.getElementById("coinHighscore").innerText =
-        coinHighscore;
 
-    document.getElementById("homeCoins").innerText =
-        points;
+    document.getElementById(
+        "coinHighscore"
+    ).innerText = coinHighscore;
 
-    document.getElementById("snakeHighscore").innerText =
+
+    document.getElementById(
+        "homeCoins"
+    ).innerText = points;
+
+
+    document.getElementById(
+        "snakeHighscore"
+    ).innerText =
         snakeHighscore;
 
-    document.getElementById("homeSnakeHighscore").innerText =
+
+    document.getElementById(
+        "homeSnakeHighscore"
+    ).innerText =
         snakeHighscore;
 
-    document.getElementById("easyWins").innerText =
+
+    document.getElementById(
+        "easyWins"
+    ).innerText =
         difficultyWins.easy;
 
-    document.getElementById("mediumWins").innerText =
+
+    document.getElementById(
+        "mediumWins"
+    ).innerText =
         difficultyWins.medium;
 
-    document.getElementById("hardWins").innerText =
+
+    document.getElementById(
+        "hardWins"
+    ).innerText =
         difficultyWins.hard;
 
 }
@@ -738,22 +818,29 @@ function updateSavedDisplays() {
 
 function showGame(game) {
 
-    document.querySelectorAll(".game").forEach(
-        function(section) {
+    document
+        .querySelectorAll(".game")
+        .forEach(
+            function(section) {
 
-            section.style.display = "none";
+                section.style.display =
+                    "none";
 
-        }
-    );
+            }
+        );
 
-    document.getElementById("home").style.display =
-        "none";
+
+    document.getElementById(
+        "home"
+    ).style.display = "none";
 
 
     if (game === "home") {
 
-        document.getElementById("home").style.display =
-            "block";
+        document.getElementById(
+            "home"
+        ).style.display = "block";
+
 
         updateSavedDisplays();
 
@@ -761,12 +848,16 @@ function showGame(game) {
 
     else {
 
-        document.getElementById(game).style.display =
-            "block";
+        document.getElementById(
+            game
+        ).style.display = "block";
+
 
         if (game === "tictactoe") {
 
-            startTicTacToe();
+            setDifficulty(
+                currentDifficulty
+            );
 
         }
 
@@ -799,6 +890,7 @@ function createDeck() {
         "♣"
     ];
 
+
     const values = [
         "A",
         "2",
@@ -815,6 +907,7 @@ function createDeck() {
         "K"
     ];
 
+
     let newDeck = [];
 
 
@@ -830,6 +923,7 @@ function createDeck() {
         }
 
     }
+
 
     return newDeck;
 
@@ -849,6 +943,7 @@ function shuffle(array) {
             Math.floor(
                 Math.random() * (i + 1)
             );
+
 
         [
             array[i],
@@ -878,7 +973,9 @@ function cardValue(card) {
     }
 
 
-    if (card.value === "A") {
+    if (
+        card.value === "A"
+    ) {
 
         return 11;
 
@@ -902,7 +999,10 @@ function calculateHand(cards) {
 
         total += cardValue(card);
 
-        if (card.value === "A") {
+
+        if (
+            card.value === "A"
+        ) {
 
             aces++;
 
@@ -974,14 +1074,9 @@ function displayCard(
 
 function displayBlackjack() {
 
-    const playerHand =
-        document.getElementById("playerHand");
-
-    const dealerHand =
-        document.getElementById("dealerHand");
-
-
-    playerHand.innerHTML =
+    document.getElementById(
+        "playerHand"
+    ).innerHTML =
         playerCards
             .map(
                 card =>
@@ -990,7 +1085,9 @@ function displayBlackjack() {
             .join("");
 
 
-    dealerHand.innerHTML =
+    document.getElementById(
+        "dealerHand"
+    ).innerHTML =
         dealerCards
             .map(
                 (card, index) => {
@@ -1006,6 +1103,7 @@ function displayBlackjack() {
                         );
 
                     }
+
 
                     return displayCard(card);
 
@@ -1061,7 +1159,8 @@ function startBlackjack() {
             points > coinHighscore
         ) {
 
-            coinHighscore = points;
+            coinHighscore =
+                points;
 
         }
 
@@ -1072,11 +1171,11 @@ function startBlackjack() {
             "🎉 Blackjack! +2 coins!";
 
 
-        displayBlackjack();
-
         saveData();
 
         updateSavedDisplays();
+
+        displayBlackjack();
 
     }
 
@@ -1102,7 +1201,9 @@ function hit() {
 
 
     let total =
-        calculateHand(playerCards);
+        calculateHand(
+            playerCards
+        );
 
 
     if (total > 21) {
@@ -1134,7 +1235,9 @@ function stand() {
 
 
     while (
-        calculateHand(dealerCards) < 17
+        calculateHand(
+            dealerCards
+        ) < 17
     ) {
 
         dealerCards.push(
@@ -1145,10 +1248,15 @@ function stand() {
 
 
     let playerTotal =
-        calculateHand(playerCards);
+        calculateHand(
+            playerCards
+        );
+
 
     let dealerTotal =
-        calculateHand(dealerCards);
+        calculateHand(
+            dealerCards
+        );
 
 
     blackjackActive = false;
@@ -1166,7 +1274,8 @@ function stand() {
             points > coinHighscore
         ) {
 
-            coinHighscore = points;
+            coinHighscore =
+                points;
 
         }
 
@@ -1218,6 +1327,7 @@ const canvas =
         "snakeCanvas"
     );
 
+
 const ctx =
     canvas.getContext("2d");
 
@@ -1264,8 +1374,9 @@ function startSnake() {
 
 
     /*
-       SLOWER THAN BEFORE
-       250 = slow
+       SLOW SPEED
+       250 milliseconds
+       between moves
     */
 
     snakeInterval =
@@ -1300,6 +1411,10 @@ function createFood() {
 }
 
 
+
+/* =========================
+   SNAKE UPDATE
+========================= */
 
 function updateSnake() {
 
@@ -1348,7 +1463,7 @@ function updateSnake() {
     }
 
 
-    /* WALL */
+    /* WALL COLLISION */
 
     if (
         head.x < 0 ||
@@ -1364,7 +1479,7 @@ function updateSnake() {
     }
 
 
-    /* BODY */
+    /* BODY COLLISION */
 
     for (
         let part of snake
@@ -1404,11 +1519,13 @@ function updateSnake() {
 
 
         if (
-            snakeScore > snakeHighscore
+            snakeScore >
+            snakeHighscore
         ) {
 
             snakeHighscore =
                 snakeScore;
+
 
             saveData();
 
@@ -1434,9 +1551,19 @@ function updateSnake() {
 
 
 
+/* =========================================================
+   SNAKE DRAW
+   COLLEGE BLOCK / CHECKER GRID
+========================================================= */
+
 function drawSnake() {
 
-    ctx.fillStyle = "black";
+    /*
+       Background
+    */
+
+    ctx.fillStyle =
+        "#101018";
 
 
     ctx.fillRect(
@@ -1447,34 +1574,144 @@ function drawSnake() {
     );
 
 
-    /* FOOD */
+    /*
+       DRAW EVERY SINGLE 20x20 FIELD
+       LIKE A COLLEGE NOTEBOOK
+    */
 
-    ctx.fillStyle = "red";
+    ctx.strokeStyle =
+        "#3d3d55";
 
-
-    ctx.fillRect(
-        food.x,
-        food.y,
-        20,
-        20
-    );
-
-
-    /* SNAKE */
-
-    ctx.fillStyle =
-        "#00ff66";
+    ctx.lineWidth = 1;
 
 
     for (
-        let part of snake
+        let x = 0;
+        x <= canvas.width;
+        x += 20
     ) {
 
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            0
+        );
+
+        ctx.lineTo(
+            x,
+            canvas.height
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    for (
+        let y = 0;
+        y <= canvas.height;
+        y += 20
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            0,
+            y
+        );
+
+        ctx.lineTo(
+            canvas.width,
+            y
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    /*
+       FOOD
+    */
+
+    ctx.fillStyle =
+        "#ff3b3b";
+
+
+    ctx.fillRect(
+        food.x + 3,
+        food.y + 3,
+        14,
+        14
+    );
+
+
+    /*
+       SNAKE
+    */
+
+    for (
+        let i = 0;
+        i < snake.length;
+        i++
+    ) {
+
+        const part =
+            snake[i];
+
+
+        /*
+           Head
+        */
+
+        if (i === 0) {
+
+            ctx.fillStyle =
+                "#39ff88";
+
+        }
+
+        /*
+           Body
+        */
+
+        else {
+
+            ctx.fillStyle =
+                "#16c96b";
+
+        }
+
+
+        /*
+           Leave a tiny gap
+           so the grid stays visible
+        */
+
         ctx.fillRect(
-            part.x,
-            part.y,
-            19,
-            19
+            part.x + 2,
+            part.y + 2,
+            16,
+            16
+        );
+
+
+        /*
+           Border around snake
+        */
+
+        ctx.strokeStyle =
+            "#07130d";
+
+        ctx.lineWidth = 1;
+
+
+        ctx.strokeRect(
+            part.x + 2,
+            part.y + 2,
+            16,
+            16
         );
 
     }
@@ -1491,7 +1728,8 @@ function gameOverSnake() {
 
 
     if (
-        snakeScore > snakeHighscore
+        snakeScore >
+        snakeHighscore
     ) {
 
         snakeHighscore =
@@ -1523,7 +1761,8 @@ function changeDirection(
         snakeDirection !== "down"
     ) {
 
-        snakeDirection = "up";
+        snakeDirection =
+            "up";
 
     }
 
@@ -1533,7 +1772,8 @@ function changeDirection(
         snakeDirection !== "up"
     ) {
 
-        snakeDirection = "down";
+        snakeDirection =
+            "down";
 
     }
 
@@ -1543,7 +1783,8 @@ function changeDirection(
         snakeDirection !== "right"
     ) {
 
-        snakeDirection = "left";
+        snakeDirection =
+            "left";
 
     }
 
@@ -1553,7 +1794,8 @@ function changeDirection(
         snakeDirection !== "left"
     ) {
 
-        snakeDirection = "right";
+        snakeDirection =
+            "right";
 
     }
 
@@ -1561,7 +1803,7 @@ function changeDirection(
 
 
 
-/* KEYBOARD */
+/* KEYBOARD CONTROLS */
 
 document.addEventListener(
     "keydown",
@@ -1571,7 +1813,9 @@ document.addEventListener(
             event.key === "ArrowUp"
         ) {
 
-            changeDirection("up");
+            changeDirection(
+                "up"
+            );
 
         }
 
@@ -1580,7 +1824,9 @@ document.addEventListener(
             event.key === "ArrowDown"
         ) {
 
-            changeDirection("down");
+            changeDirection(
+                "down"
+            );
 
         }
 
@@ -1589,7 +1835,9 @@ document.addEventListener(
             event.key === "ArrowLeft"
         ) {
 
-            changeDirection("left");
+            changeDirection(
+                "left"
+            );
 
         }
 
@@ -1598,7 +1846,9 @@ document.addEventListener(
             event.key === "ArrowRight"
         ) {
 
-            changeDirection("right");
+            changeDirection(
+                "right"
+            );
 
         }
 
@@ -1627,40 +1877,32 @@ function setDifficulty(
         difficulty;
 
 
-    document
-        .getElementById(
-            "easyButton"
-        )
-        .classList.remove(
-            "active"
-        );
+    document.getElementById(
+        "easyButton"
+    ).classList.remove(
+        "active"
+    );
 
 
-    document
-        .getElementById(
-            "mediumButton"
-        )
-        .classList.remove(
-            "active"
-        );
+    document.getElementById(
+        "mediumButton"
+    ).classList.remove(
+        "active"
+    );
 
 
-    document
-        .getElementById(
-            "hardButton"
-        )
-        .classList.remove(
-            "active"
-        );
+    document.getElementById(
+        "hardButton"
+    ).classList.remove(
+        "active"
+    );
 
 
-    document
-        .getElementById(
-            difficulty + "Button"
-        )
-        .classList.add(
-            "active"
-        );
+    document.getElementById(
+        difficulty + "Button"
+    ).classList.add(
+        "active"
+    );
 
 
     startTicTacToe();
@@ -1668,6 +1910,10 @@ function setDifficulty(
 }
 
 
+
+/* =========================
+   NEW TIC TAC TOE GAME
+========================= */
 
 function startTicTacToe() {
 
@@ -1679,8 +1925,17 @@ function startTicTacToe() {
         "",
         "",
         "",
+        "",
         ""
     ];
+
+    /*
+       Make absolutely sure
+       the board has exactly
+       9 playable fields.
+    */
+
+    ticBoard.length = 9;
 
 
     ticGameActive = true;
@@ -1697,6 +1952,10 @@ function startTicTacToe() {
 }
 
 
+
+/* =========================
+   DRAW TIC TAC TOE
+========================= */
 
 function drawTicTacToe() {
 
@@ -1725,8 +1984,13 @@ function drawTicTacToe() {
             "tic-cell";
 
 
+        /*
+           || "" prevents
+           "undefined"
+        */
+
         cell.innerText =
-            ticBoard[i];
+            ticBoard[i] || "";
 
 
         cell.onclick =
@@ -1737,7 +2001,9 @@ function drawTicTacToe() {
             };
 
 
-        board.appendChild(cell);
+        board.appendChild(
+            cell
+        );
 
     }
 
@@ -1768,7 +2034,8 @@ function playerMove(index) {
         checkWinner("❌")
     ) {
 
-        ticGameActive = false;
+        ticGameActive =
+            false;
 
 
         difficultyWins[
@@ -1796,7 +2063,8 @@ function playerMove(index) {
         isBoardFull()
     ) {
 
-        ticGameActive = false;
+        ticGameActive =
+            false;
 
 
         document.getElementById(
@@ -1826,7 +2094,7 @@ function playerMove(index) {
 
 
 /* =========================
-   COMPUTER AI
+   COMPUTER MOVE
 ========================= */
 
 function computerMove() {
@@ -1871,7 +2139,9 @@ function computerMove() {
     }
 
 
-    if (move === null) {
+    if (
+        move === null
+    ) {
 
         return;
 
@@ -1889,7 +2159,8 @@ function computerMove() {
         checkWinner("⭕")
     ) {
 
-        ticGameActive = false;
+        ticGameActive =
+            false;
 
 
         document.getElementById(
@@ -1907,7 +2178,8 @@ function computerMove() {
         isBoardFull()
     ) {
 
-        ticGameActive = false;
+        ticGameActive =
+            false;
 
 
         document.getElementById(
@@ -1930,7 +2202,9 @@ function computerMove() {
 
 
 
-/* EASY */
+/* =========================
+   EASY
+========================= */
 
 function randomMove() {
 
@@ -1974,16 +2248,16 @@ function randomMove() {
 
 
 
-/* MEDIUM */
+/* =========================
+   MEDIUM
+========================= */
 
 function mediumMove() {
 
-    /*
-       First try to win.
-    */
-
     let winningMove =
-        findWinningMove("⭕");
+        findWinningMove(
+            "⭕"
+        );
 
 
     if (
@@ -1995,12 +2269,10 @@ function mediumMove() {
     }
 
 
-    /*
-       Then block the player.
-    */
-
     let blockingMove =
-        findWinningMove("❌");
+        findWinningMove(
+            "❌"
+        );
 
 
     if (
@@ -2012,27 +2284,24 @@ function mediumMove() {
     }
 
 
-    /*
-       Otherwise random.
-    */
-
     return randomMove();
 
 }
 
 
 
-/* HARD */
+/* =========================
+   HARD
+========================= */
 
 function hardMove() {
 
-    /*
-       Hard mode uses minimax.
-    */
+    let bestScore =
+        -Infinity;
 
-    let bestScore = -Infinity;
 
-    let bestMove = null;
+    let bestMove =
+        null;
 
 
     for (
@@ -2066,6 +2335,7 @@ function hardMove() {
 
                 bestScore =
                     score;
+
 
                 bestMove =
                     i;
@@ -2102,7 +2372,9 @@ function findWinningMove(
 
 
             let won =
-                checkWinner(player);
+                checkWinner(
+                    player
+                );
 
 
             ticBoard[i] =
@@ -2126,7 +2398,9 @@ function findWinningMove(
 
 
 
-/* MINIMAX */
+/* =========================
+   MINIMAX
+========================= */
 
 function minimax(
     board,
@@ -2340,7 +2614,7 @@ function isBoardFull() {
 
 
 /* =========================================================
-   RESET ALL DATA
+   RESET
 ========================================================= */
 
 function resetAllData() {
@@ -2415,7 +2689,7 @@ function resetAllData() {
 
 
 /* =========================================================
-   START WEBSITE
+   START
 ========================================================= */
 
 updateSavedDisplays();
