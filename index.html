@@ -1,76 +1,230 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Arcade</title>
 
 <style>
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+body {
     font-family: Arial, sans-serif;
-    background: #10101a;
+    background: #0f172a;
     color: white;
     text-align: center;
 }
 
 header {
-    padding: 35px 20px;
-    background: #17172a;
+    background: #111827;
+    padding: 25px;
+    border-bottom: 2px solid #334155;
 }
 
 h1 {
     font-size: 42px;
-    margin: 0;
+    margin-bottom: 8px;
 }
 
-p {
-    color: #aaa;
+.subtitle {
+    color: #94a3b8;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px 15px;
 }
 
 .games {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 20px;
-    flex-wrap: wrap;
-    padding: 40px 20px;
 }
 
-.game {
-    width: 180px;
-    padding: 25px;
-    background: #202035;
+.game-card {
+    background: #1e293b;
+    padding: 30px;
     border-radius: 18px;
     cursor: pointer;
     transition: 0.2s;
+    border: 1px solid #334155;
 }
 
-.game:hover {
+.game-card:hover {
     transform: translateY(-5px);
-    background: #2b2b48;
+    background: #263449;
 }
 
-.emoji {
+.game-icon {
     font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.game-card h2 {
+    margin-bottom: 10px;
 }
 
 button {
-    padding: 12px 20px;
-    margin: 8px;
+    background: #3b82f6;
+    color: white;
     border: none;
+    padding: 12px 20px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
+    margin: 5px;
 }
 
-#blackjack {
+button:hover {
+    background: #2563eb;
+}
+
+.back {
+    background: #475569;
+}
+
+.game {
     display: none;
+}
+
+.game.active {
+    display: block;
+}
+
+.score {
+    font-size: 20px;
+    margin: 15px;
+}
+
+/* BLACKJACK */
+
+.table {
+    background: #166534;
+    border: 8px solid #713f12;
+    border-radius: 30px;
     padding: 30px;
+    margin-top: 20px;
+    min-height: 500px;
+}
+
+.hand {
+    min-height: 150px;
+    margin: 20px;
 }
 
 .cards {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 80px;
+    height: 115px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.card.red {
+    color: #dc2626;
+}
+
+.card .top {
+    text-align: left;
+}
+
+.card .suit {
     font-size: 30px;
-    margin: 20px;
+}
+
+.card .bottom {
+    text-align: right;
+    transform: rotate(180deg);
+}
+
+.message {
+    font-size: 22px;
+    margin: 15px;
+    font-weight: bold;
+}
+
+/* TIC TAC TOE */
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    justify-content: center;
+    gap: 8px;
+    margin: 30px auto;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background: #1e293b;
+    border: 2px solid #475569;
+    font-size: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* SNAKE */
+
+#snakeCanvas {
+    background: #020617;
+    border: 3px solid #475569;
+    max-width: 100%;
+}
+
+.controls {
+    margin-top: 15px;
+}
+
+.controls button {
+    width: 55px;
+    height: 45px;
+    padding: 5px;
+}
+
+@media(max-width:600px) {
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .table {
+        padding: 15px;
+    }
+
+    .card {
+        width: 65px;
+        height: 95px;
+    }
+
+    .board {
+        grid-template-columns: repeat(3, 80px);
+    }
+
+    .cell {
+        width: 80px;
+        height: 80px;
+    }
 }
 </style>
 </head>
@@ -78,151 +232,758 @@ button {
 <body>
 
 <header>
-    <h1>🎮 MY ARCADE</h1>
-    <p>Play mini games for free!</p>
+    <h1>🎮 My Arcade</h1>
+    <p class="subtitle">Play free mini games</p>
 </header>
 
-<div class="games">
+<div class="container">
 
-    <div class="game" onclick="openBlackjack()">
-        <div class="emoji">🃏</div>
-        <h2>Blackjack</h2>
-        <p>Play with virtual points</p>
+<!-- HOME -->
+
+<section id="home">
+
+    <h2 style="margin-bottom:25px;">Choose a Game</h2>
+
+    <div class="games">
+
+        <div class="game-card" onclick="showGame('blackjack')">
+            <div class="game-icon">🃏</div>
+            <h2>Blackjack</h2>
+            <p>Play Blackjack with virtual points.</p>
+        </div>
+
+        <div class="game-card" onclick="showGame('snake')">
+            <div class="game-icon">🐍</div>
+            <h2>Snake</h2>
+            <p>How long can you survive?</p>
+        </div>
+
+        <div class="game-card" onclick="showGame('ttt')">
+            <div class="game-icon">⭕</div>
+            <h2>Tic-Tac-Toe</h2>
+            <p>Play against the computer.</p>
+        </div>
+
     </div>
 
-    <div class="game" onclick="snake()">
-        <div class="emoji">🐍</div>
-        <h2>Snake</h2>
-        <p>Coming soon</p>
-    </div>
+</section>
 
-    <div class="game" onclick="ticTacToe()">
-        <div class="emoji">❌</div>
-        <h2>Tic-Tac-Toe</h2>
-        <p>Coming soon</p>
-    </div>
 
-</div>
+<!-- BLACKJACK -->
 
-<div id="blackjack">
+<section id="blackjack" class="game">
+
+    <button class="back" onclick="showGame('home')">← Back</button>
 
     <h2>🃏 Blackjack</h2>
 
-    <div class="cards">
-        Your cards: <span id="playerCards">-</span>
+    <div class="score">
+        Points: <span id="points">1000</span>
     </div>
 
-    <div class="cards">
-        Dealer: <span id="dealerCards">-</span>
+    <div class="table">
+
+        <div class="hand">
+            <h3>Dealer</h3>
+            <div id="dealerCards" class="cards"></div>
+            <p>Total: <span id="dealerTotal">0</span></p>
+        </div>
+
+        <div class="hand">
+            <h3>You</h3>
+            <div id="playerCards" class="cards"></div>
+            <p>Total: <span id="playerTotal">0</span></p>
+        </div>
+
+        <div id="bjMessage" class="message">
+            Start a round!
+        </div>
+
+        <button onclick="startBlackjack()">Start Round</button>
+        <button onclick="hit()">Hit</button>
+        <button onclick="stand()">Stand</button>
+
     </div>
 
-    <h3 id="result"></h3>
+</section>
 
-    <button onclick="deal()">Deal</button>
-    <button onclick="hit()">Hit</button>
-    <button onclick="stand()">Stand</button>
+
+<!-- SNAKE -->
+
+<section id="snake" class="game">
+
+    <button class="back" onclick="showGame('home')">← Back</button>
+
+    <h2>🐍 Snake</h2>
+
+    <div class="score">
+        Score: <span id="snakeScore">0</span>
+        |
+        Best: <span id="snakeBest">0</span>
+    </div>
+
+    <canvas id="snakeCanvas" width="400" height="400"></canvas>
 
     <br>
 
-    <button onclick="closeBlackjack()">← Back</button>
+    <button onclick="startSnake()">Start / Restart</button>
+
+    <div class="controls">
+        <div>
+            <button onclick="changeDirection('up')">⬆️</button>
+        </div>
+
+        <div>
+            <button onclick="changeDirection('left')">⬅️</button>
+            <button onclick="changeDirection('down')">⬇️</button>
+            <button onclick="changeDirection('right')">➡️</button>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- TIC TAC TOE -->
+
+<section id="ttt" class="game">
+
+    <button class="back" onclick="showGame('home')">← Back</button>
+
+    <h2>⭕ Tic-Tac-Toe</h2>
+
+    <p id="tttMessage">Your turn!</p>
+
+    <div id="board" class="board"></div>
+
+    <button onclick="resetTTT()">New Game</button>
+
+</section>
 
 </div>
 
+
 <script>
 
-let player = [];
-let dealer = [];
+/* =========================
+   PAGE SWITCHING
+========================= */
 
-function card() {
-    let cards = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
-    return cards[Math.floor(Math.random() * cards.length)];
+function showGame(game) {
+
+    document.querySelectorAll(".game").forEach(x => {
+        x.classList.remove("active");
+    });
+
+    document.getElementById("home").style.display =
+        game === "home" ? "block" : "none";
+
+    if(game !== "home") {
+        document.getElementById(game).classList.add("active");
+    }
+
+    if(game === "snake") {
+        drawSnake();
+    }
 }
 
-function value(cards) {
+
+/* =========================
+   BLACKJACK
+========================= */
+
+let deck = [];
+let playerHand = [];
+let dealerHand = [];
+let blackjackActive = false;
+
+let points = 1000;
+
+function makeDeck() {
+
+    const suits = ["♠","♥","♦","♣"];
+    const values = [
+        "A","2","3","4","5","6","7",
+        "8","9","10","J","Q","K"
+    ];
+
+    deck = [];
+
+    for(let suit of suits) {
+
+        for(let value of values) {
+
+            deck.push({
+                suit: suit,
+                value: value
+            });
+
+        }
+
+    }
+
+    deck.sort(() => Math.random() - 0.5);
+}
+
+
+function cardValue(card) {
+
+    if(["J","Q","K"].includes(card.value)) {
+        return 10;
+    }
+
+    if(card.value === "A") {
+        return 11;
+    }
+
+    return Number(card.value);
+}
+
+
+function handTotal(hand) {
 
     let total = 0;
+    let aces = 0;
 
-    cards.forEach(c => {
+    hand.forEach(card => {
 
-        if (c === "A") total += 11;
-        else if (["J","Q","K"].includes(c)) total += 10;
-        else total += Number(c);
+        total += cardValue(card);
+
+        if(card.value === "A") {
+            aces++;
+        }
 
     });
+
+    while(total > 21 && aces > 0) {
+        total -= 10;
+        aces--;
+    }
 
     return total;
 }
 
-function openBlackjack() {
-    document.querySelector(".games").style.display = "none";
-    document.getElementById("blackjack").style.display = "block";
+
+function createCard(card, hidden=false) {
+
+    if(hidden) {
+
+        return `
+        <div class="card"
+        style="background:#1e3a8a;color:white;justify-content:center;font-size:35px;">
+        🂠
+        </div>
+        `;
+
+    }
+
+    let red =
+        card.suit === "♥" ||
+        card.suit === "♦";
+
+    return `
+    <div class="card ${red ? "red" : ""}">
+
+        <div class="top">
+            ${card.value}${card.suit}
+        </div>
+
+        <div class="suit">
+            ${card.suit}
+        </div>
+
+        <div class="bottom">
+            ${card.value}${card.suit}
+        </div>
+
+    </div>
+    `;
 }
 
-function closeBlackjack() {
-    document.querySelector(".games").style.display = "flex";
-    document.getElementById("blackjack").style.display = "none";
+
+function renderBlackjack(hideDealer=true) {
+
+    document.getElementById("playerCards").innerHTML =
+        playerHand.map(card => createCard(card)).join("");
+
+    document.getElementById("dealerCards").innerHTML =
+        dealerHand.map((card,index) =>
+            createCard(card, hideDealer && index === 0)
+        ).join("");
+
+    document.getElementById("playerTotal").innerText =
+        handTotal(playerHand);
+
+    document.getElementById("dealerTotal").innerText =
+        hideDealer ? "?" : handTotal(dealerHand);
+
+    document.getElementById("points").innerText = points;
 }
 
-function deal() {
 
-    player = [card(), card()];
-    dealer = [card(), card()];
+function startBlackjack() {
 
-    update();
+    makeDeck();
 
-    document.getElementById("result").innerText =
-        "Your total: " + value(player);
+    playerHand = [
+        deck.pop(),
+        deck.pop()
+    ];
 
+    dealerHand = [
+        deck.pop(),
+        deck.pop()
+    ];
+
+    blackjackActive = true;
+
+    document.getElementById("bjMessage").innerText =
+        "Your turn!";
+
+    renderBlackjack(true);
+
+    if(handTotal(playerHand) === 21) {
+        stand();
+    }
 }
+
 
 function hit() {
 
-    player.push(card());
+    if(!blackjackActive) return;
 
-    update();
+    playerHand.push(deck.pop());
 
-    if (value(player) > 21) {
-        document.getElementById("result").innerText = "💥 Bust! You lose.";
+    renderBlackjack(true);
+
+    if(handTotal(playerHand) > 21) {
+
+        blackjackActive = false;
+
+        document.getElementById("bjMessage").innerText =
+            "Bust! You went over 21.";
+
+        renderBlackjack(false);
     }
 }
+
 
 function stand() {
 
-    while (value(dealer) < 17) {
-        dealer.push(card());
+    if(!blackjackActive) return;
+
+    blackjackActive = false;
+
+    while(handTotal(dealerHand) < 17) {
+        dealerHand.push(deck.pop());
     }
 
-    update();
+    let playerTotal = handTotal(playerHand);
+    let dealerTotal = handTotal(dealerHand);
 
-    let p = value(player);
-    let d = value(dealer);
+    let message = "";
 
-    if (d > 21 || p > d) {
-        document.getElementById("result").innerText = "🎉 You win!";
-    } else if (p === d) {
-        document.getElementById("result").innerText = "🤝 Draw!";
+    if(playerTotal > 21) {
+
+        message = "You busted!";
+
+    } else if(dealerTotal > 21) {
+
+        message = "Dealer busted — you win!";
+
+        points += 100;
+
+    } else if(playerTotal > dealerTotal) {
+
+        message = "You win!";
+
+        points += 100;
+
+    } else if(playerTotal < dealerTotal) {
+
+        message = "Dealer wins.";
+
+        points -= 50;
+
     } else {
-        document.getElementById("result").innerText = "😢 Dealer wins!";
+
+        message = "It's a tie.";
+
+    }
+
+    document.getElementById("bjMessage").innerText = message;
+
+    renderBlackjack(false);
+}
+
+
+/* =========================
+   SNAKE
+========================= */
+
+const canvas = document.getElementById("snakeCanvas");
+const ctx = canvas.getContext("2d");
+
+const grid = 20;
+
+let snake = [];
+let food = {};
+let direction = "right";
+let nextDirection = "right";
+let snakeRunning = false;
+let snakeInterval;
+
+let snakeScore = 0;
+let snakeBest = 0;
+
+
+function startSnake() {
+
+    clearInterval(snakeInterval);
+
+    snake = [
+        {x:200,y:200},
+        {x:180,y:200},
+        {x:160,y:200}
+    ];
+
+    direction = "right";
+    nextDirection = "right";
+
+    snakeScore = 0;
+
+    document.getElementById("snakeScore").innerText =
+        snakeScore;
+
+    createFood();
+
+    snakeRunning = true;
+
+    snakeInterval = setInterval(updateSnake,100);
+}
+
+
+function createFood() {
+
+    food = {
+        x: Math.floor(Math.random()*20)*grid,
+        y: Math.floor(Math.random()*20)*grid
+    };
+}
+
+
+function updateSnake() {
+
+    direction = nextDirection;
+
+    let head = {...snake[0]};
+
+    if(direction === "up") head.y -= grid;
+    if(direction === "down") head.y += grid;
+    if(direction === "left") head.x -= grid;
+    if(direction === "right") head.x += grid;
+
+    if(
+        head.x < 0 ||
+        head.y < 0 ||
+        head.x >= canvas.width ||
+        head.y >= canvas.height
+    ) {
+
+        endSnake();
+        return;
+    }
+
+    for(let part of snake) {
+
+        if(head.x === part.x && head.y === part.y) {
+
+            endSnake();
+            return;
+        }
+    }
+
+    snake.unshift(head);
+
+    if(head.x === food.x && head.y === food.y) {
+
+        snakeScore++;
+
+        if(snakeScore > snakeBest) {
+            snakeBest = snakeScore;
+        }
+
+        document.getElementById("snakeScore").innerText =
+            snakeScore;
+
+        document.getElementById("snakeBest").innerText =
+            snakeBest;
+
+        createFood();
+
+    } else {
+
+        snake.pop();
+
+    }
+
+    drawSnake();
+}
+
+
+function drawSnake() {
+
+    ctx.fillStyle = "#020617";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#ef4444";
+
+    ctx.fillRect(
+        food.x,
+        food.y,
+        grid,
+        grid
+    );
+
+    ctx.fillStyle = "#22c55e";
+
+    snake.forEach(part => {
+
+        ctx.fillRect(
+            part.x,
+            part.y,
+            grid-2,
+            grid-2
+        );
+
+    });
+}
+
+
+function endSnake() {
+
+    clearInterval(snakeInterval);
+
+    snakeRunning = false;
+
+    alert("Game Over! Score: " + snakeScore);
+}
+
+
+function changeDirection(newDirection) {
+
+    if(newDirection === "up" && direction !== "down")
+        nextDirection = "up";
+
+    if(newDirection === "down" && direction !== "up")
+        nextDirection = "down";
+
+    if(newDirection === "left" && direction !== "right")
+        nextDirection = "left";
+
+    if(newDirection === "right" && direction !== "left")
+        nextDirection = "right";
+}
+
+
+document.addEventListener("keydown", function(event) {
+
+    if(event.key === "ArrowUp")
+        changeDirection("up");
+
+    if(event.key === "ArrowDown")
+        changeDirection("down");
+
+    if(event.key === "ArrowLeft")
+        changeDirection("left");
+
+    if(event.key === "ArrowRight")
+        changeDirection("right");
+
+});
+
+
+/* =========================
+   TIC TAC TOE
+========================= */
+
+let board = ["","","","","","","","",""];
+
+let gameOver = false;
+
+
+function renderTTT() {
+
+    const boardElement =
+        document.getElementById("board");
+
+    boardElement.innerHTML = "";
+
+    board.forEach((value,index) => {
+
+        const cell =
+            document.createElement("div");
+
+        cell.className = "cell";
+
+        cell.innerText = value;
+
+        cell.onclick = () => playerMove(index);
+
+        boardElement.appendChild(cell);
+
+    });
+}
+
+
+function checkWinner(b) {
+
+    const wins = [
+
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+
+        [0,4,8],
+        [2,4,6]
+
+    ];
+
+    for(let combination of wins) {
+
+        const [a,b1,c] = combination;
+
+        if(
+            b[a] &&
+            b[a] === b[b1] &&
+            b[a] === b[c]
+        ) {
+
+            return b[a];
+
+        }
+
+    }
+
+    if(!b.includes("")) {
+        return "draw";
+    }
+
+    return null;
+}
+
+
+function playerMove(index) {
+
+    if(
+        board[index] !== "" ||
+        gameOver
+    ) return;
+
+    board[index] = "X";
+
+    renderTTT();
+
+    let winner = checkWinner(board);
+
+    if(winner) {
+
+        finishTTT(winner);
+        return;
+
+    }
+
+    document.getElementById("tttMessage").innerText =
+        "Computer's turn...";
+
+    setTimeout(computerMove,400);
+}
+
+
+function computerMove() {
+
+    if(gameOver) return;
+
+    let available = [];
+
+    board.forEach((value,index) => {
+
+        if(value === "") {
+            available.push(index);
+        }
+
+    });
+
+    if(available.length === 0) return;
+
+    let move =
+        available[Math.floor(Math.random()*available.length)];
+
+    board[move] = "O";
+
+    renderTTT();
+
+    let winner = checkWinner(board);
+
+    if(winner) {
+
+        finishTTT(winner);
+        return;
+
+    }
+
+    document.getElementById("tttMessage").innerText =
+        "Your turn!";
+}
+
+
+function finishTTT(winner) {
+
+    gameOver = true;
+
+    if(winner === "draw") {
+
+        document.getElementById("tttMessage").innerText =
+            "It's a draw!";
+
+    } else if(winner === "X") {
+
+        document.getElementById("tttMessage").innerText =
+            "🎉 You win!";
+
+    } else {
+
+        document.getElementById("tttMessage").innerText =
+            "Computer wins!";
+
     }
 }
 
-function update() {
 
-    document.getElementById("playerCards").innerText =
-        player.join("  ");
+function resetTTT() {
 
-    document.getElementById("dealerCards").innerText =
-        dealer.join("  ");
+    board = [
+        "","","",
+        "","","",
+        "","",""
+    ];
 
+    gameOver = false;
+
+    document.getElementById("tttMessage").innerText =
+        "Your turn!";
+
+    renderTTT();
 }
 
-function snake() {
-    alert("🐍 Snake kommt in Version 2!");
-}
 
-function ticTacToe() {
-    alert("❌ Tic-Tac-Toe kommt in Version 2!");
-}
+/* INITIALIZE */
+
+renderTTT();
+drawSnake();
 
 </script>
 
