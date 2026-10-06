@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Arcade</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #10101a;
+    color: white;
+    text-align: center;
+}
+
+header {
+    padding: 35px 20px;
+    background: #17172a;
+}
+
+h1 {
+    font-size: 42px;
+    margin: 0;
+}
+
+p {
+    color: #aaa;
+}
+
+.games {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+}
+
+.game {
+    width: 180px;
+    padding: 25px;
+    background: #202035;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.game:hover {
+    transform: translateY(-5px);
+    background: #2b2b48;
+}
+
+.emoji {
+    font-size: 55px;
+}
+
+button {
+    padding: 12px 20px;
+    margin: 8px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#blackjack {
+    display: none;
+    padding: 30px;
+}
+
+.cards {
+    font-size: 30px;
+    margin: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎮 MY ARCADE</h1>
+    <p>Play mini games for free!</p>
+</header>
+
+<div class="games">
+
+    <div class="game" onclick="openBlackjack()">
+        <div class="emoji">🃏</div>
+        <h2>Blackjack</h2>
+        <p>Play with virtual points</p>
+    </div>
+
+    <div class="game" onclick="snake()">
+        <div class="emoji">🐍</div>
+        <h2>Snake</h2>
+        <p>Coming soon</p>
+    </div>
+
+    <div class="game" onclick="ticTacToe()">
+        <div class="emoji">❌</div>
+        <h2>Tic-Tac-Toe</h2>
+        <p>Coming soon</p>
+    </div>
+
+</div>
+
+<div id="blackjack">
+
+    <h2>🃏 Blackjack</h2>
+
+    <div class="cards">
+        Your cards: <span id="playerCards">-</span>
+    </div>
+
+    <div class="cards">
+        Dealer: <span id="dealerCards">-</span>
+    </div>
+
+    <h3 id="result"></h3>
+
+    <button onclick="deal()">Deal</button>
+    <button onclick="hit()">Hit</button>
+    <button onclick="stand()">Stand</button>
+
+    <br>
+
+    <button onclick="closeBlackjack()">← Back</button>
+
+</div>
+
+<script>
+
+let player = [];
+let dealer = [];
+
+function card() {
+    let cards = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+    return cards[Math.floor(Math.random() * cards.length)];
+}
+
+function value(cards) {
+
+    let total = 0;
+
+    cards.forEach(c => {
+
+        if (c === "A") total += 11;
+        else if (["J","Q","K"].includes(c)) total += 10;
+        else total += Number(c);
+
+    });
+
+    return total;
+}
+
+function openBlackjack() {
+    document.querySelector(".games").style.display = "none";
+    document.getElementById("blackjack").style.display = "block";
+}
+
+function closeBlackjack() {
+    document.querySelector(".games").style.display = "flex";
+    document.getElementById("blackjack").style.display = "none";
+}
+
+function deal() {
+
+    player = [card(), card()];
+    dealer = [card(), card()];
+
+    update();
+
+    document.getElementById("result").innerText =
+        "Your total: " + value(player);
+
+}
+
+function hit() {
+
+    player.push(card());
+
+    update();
+
+    if (value(player) > 21) {
+        document.getElementById("result").innerText = "💥 Bust! You lose.";
+    }
+}
+
+function stand() {
+
+    while (value(dealer) < 17) {
+        dealer.push(card());
+    }
+
+    update();
+
+    let p = value(player);
+    let d = value(dealer);
+
+    if (d > 21 || p > d) {
+        document.getElementById("result").innerText = "🎉 You win!";
+    } else if (p === d) {
+        document.getElementById("result").innerText = "🤝 Draw!";
+    } else {
+        document.getElementById("result").innerText = "😢 Dealer wins!";
+    }
+}
+
+function update() {
+
+    document.getElementById("playerCards").innerText =
+        player.join("  ");
+
+    document.getElementById("dealerCards").innerText =
+        dealer.join("  ");
+
+}
+
+function snake() {
+    alert("🐍 Snake kommt in Version 2!");
+}
+
+function ticTacToe() {
+    alert("❌ Tic-Tac-Toe kommt in Version 2!");
+}
+
+</script>
+
+</body>
+</html>
